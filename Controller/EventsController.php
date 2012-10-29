@@ -28,14 +28,19 @@ class EventsController extends EventsAppController {
 	}
 	public function myEvents($userId) {
 		$this->Event->recursive = 0;
-		$myEvents = $this->Event->find('all', array(
+		$events = $this->Event->find('all', array(
 		    'conditions' => array(
 			'Event.start > NOW()',
 			'Event.creator_id' => $userId
 		    ),
 		    'order' => array('Event.start' => 'asc')
 		    ));
-		return $myEvents;
+		// return() the data if it's being used via an element
+		if($this->request->params['requested'] !== NULL) {
+		  return $events;
+		} else {
+		  $this->set('events', $events);
+		}
 	}
 
 /**
