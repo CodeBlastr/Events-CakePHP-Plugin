@@ -2,6 +2,7 @@
 	<h2><?php echo __('Events');?></h2>
 
 	<?php
+	// index page per user
 	$lastDay = '';
 	foreach ($events as $event) {
 	    $currentDay = date('F jS, Y', strtotime($event['Event']['start']));
