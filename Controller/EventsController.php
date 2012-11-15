@@ -10,7 +10,7 @@ class EventsController extends EventsAppController {
 	public $name = 'Events';
 	
 	public $uses = array('Events.Event');
-	
+	public $paginatez;
 	//public $helpers = array('Time');
 	
 /**
@@ -20,12 +20,9 @@ class EventsController extends EventsAppController {
  */
 	public function index() {
 		$this->Event->recursive = 0;
-		$this->paginate['conditions']['Event.start >'] = 'NOW()';
+		$this->paginate['conditions'][] = 'Event.start > NOW()';
 		$this->paginate['order']['Event.start'] = 'asc';
-//		$this->paginate = array(
-//		    'conditions' => array('Event.start >' =>  'NOW()'),
-//		    'order' => array('Event.start' => 'asc')
-//		    );
+
 		$this->set('events', $this->paginate());
 	}
 	public function my() {
