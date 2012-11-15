@@ -36,7 +36,7 @@ class EventsController extends EventsAppController {
 		    'order' => array('Event.start' => 'asc')
 		    ));
 		// return() the data if it's being used via an element
-		if($this->request->params['requested'] !== NULL) {
+		if(isset($this->request->params['requested'])) {
 		  return $events;
 		} else {
 		  $this->set('events', $events);

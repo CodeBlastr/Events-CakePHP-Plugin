@@ -5,7 +5,7 @@
 	<?php
 	echo $this->Form->input('event_schedule_id');
 	echo $this->Form->input('name');
-	echo $this->Form->input('description');
+	echo $this->Form->input('description', array('type' => 'richtext'));
 	echo $this->Form->input('start', array('class' => 'datepicker'));
 	echo $this->Form->input('end');
 	echo $this->Form->input('tickets_total');

@@ -2,18 +2,22 @@
 	<h2><?php echo __('Events');?></h2>
 
 	<?php
-	// index page per user
-	$lastDay = '';
-	foreach ($events as $event) {
-	    $currentDay = date('F jS, Y', strtotime($event['Event']['start']));
-	    if($lastDay !== $currentDay) {
-		echo '<hr /><h3>'.($currentDay).'</h3><hr />';
-	    }
-	    
-	    echo $this->Element('singleEvent', array('event' => $event), array('plugin' => 'events'));
-	    
-	    $lastDay = date('F jS, Y', strtotime($event['Event']['start']));
-	} // foreach($event)
+	if(!empty($events)) {
+		// index page per user
+		$lastDay = '';
+		foreach ($events as $event) {
+			$currentDay = date('F jS, Y', strtotime($event['Event']['start']));
+			if($lastDay !== $currentDay) {
+			echo '<hr /><h3>'.($currentDay).'</h3><hr />';
+			}
+
+			echo $this->Element('singleEvent', array('event' => $event), array('plugin' => 'events'));
+
+			$lastDay = date('F jS, Y', strtotime($event['Event']['start']));
+		} // foreach($event)
+	} else {
+		echo '<p>There are no events currently scheduled.';
+	}
 	?>
 </div>
 <div class="actions">

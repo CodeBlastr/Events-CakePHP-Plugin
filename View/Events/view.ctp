@@ -1,78 +1,50 @@
-<div class="events view">
-<h2><?php  echo __('Event');?></h2>
+<div class="events view" style="padding:20px;" itemscope itemtype="http://schema.org/Event">
+<h2 itemprop="name"><?php  echo h($event['Event']['name']);?></h2>
+	
+<div class="eventsView_meta">
+	<div style="display: inline-block; padding: 20px;">
+		<h3>When</h3>
+		<div itemprop="startDate" content="<?php echo $event['Event']['start'] ?>">
+			<?php echo date('F jS, Y', strtotime($event['Event']['start'])); ?>
+		</div>
+		<div>
+			<?php echo date('g:i a', strtotime($event['Event']['start'])) ?> - <?php echo date('g:i a', strtotime($event['Event']['end'])) ?>
+		</div>
+	</div>
+	<div style="display: inline-block; padding: 20px;" itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">
+		<h3>Ticket Info</h3>
+		<div><span itemprop="lowPrice">$ <?php echo h($event['Event']['ticket_price']); ?></span></div>
+		<div><span itemprop="offerCount"><?php echo h($event['Event']['tickets_left']); ?></span> tickets left out of <?php echo h($event['Event']['tickets_total']); ?> total</div>
+	</div>
+	<div style="display: inline-block; padding: 20px;">
+		
+	</div>
+</div>
+<div class="eventsView_description" style="padding: 20px;">
+	<?php echo ($event['Event']['description']); ?>
+	&nbsp;
+</div>
+
 	<dl>
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-			<?php echo h($event['Event']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Event Schedule'); ?></dt>
+<!--		<dt><?php echo __('Event Schedule'); ?></dt>
 		<dd>
 			<?php echo $this->Html->link($event['EventSchedule']['id'], array('controller' => 'event_schedules', 'action' => 'view', $event['EventSchedule']['id'])); ?>
 			&nbsp;
-		</dd>
-		<dt><?php echo __('Name'); ?></dt>
-		<dd>
-			<?php echo h($event['Event']['name']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Description'); ?></dt>
-		<dd>
-			<?php echo h($event['Event']['description']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Start'); ?></dt>
-		<dd>
-			<?php echo h($event['Event']['start']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('End'); ?></dt>
-		<dd>
-			<?php echo h($event['Event']['end']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Tickets Total'); ?></dt>
-		<dd>
-			<?php echo h($event['Event']['tickets_total']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Tickets Left'); ?></dt>
-		<dd>
-			<?php echo h($event['Event']['tickets_left']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Ticket Price'); ?></dt>
-		<dd>
-			<?php echo h($event['Event']['ticket_price']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Is Public'); ?></dt>
-		<dd>
-			<?php echo h($event['Event']['is_public']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Creator Id'); ?></dt>
-		<dd>
-			<?php echo h($event['Event']['creator_id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Modifier Id'); ?></dt>
-		<dd>
-			<?php echo h($event['Event']['modifier_id']); ?>
-			&nbsp;
-		</dd>
+		</dd>-->
+
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
 			<?php echo h($event['Event']['created']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Modified'); ?></dt>
+		<dt><?php echo __('Last Updated'); ?></dt>
 		<dd>
 			<?php echo h($event['Event']['modified']); ?>
 			&nbsp;
 		</dd>
 	</dl>
 </div>
+
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>

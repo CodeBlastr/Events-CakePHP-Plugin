@@ -6,7 +6,7 @@
 		echo $this->Form->input('id');
 		echo $this->Form->input('event_schedule_id');
 		echo $this->Form->input('name');
-		echo $this->Form->input('description');
+		echo $this->Form->input('description', array('type' => 'richtext'));
 		echo $this->Form->input('start');
 		echo $this->Form->input('end');
 		echo $this->Form->input('tickets_total');
