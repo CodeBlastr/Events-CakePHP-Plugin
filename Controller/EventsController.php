@@ -10,7 +10,7 @@ class EventsController extends EventsAppController {
 	public $name = 'Events';
 	
 	public $uses = array('Events.Event');
-	public $paginatez;
+
 	//public $helpers = array('Time');
 	
 /**
