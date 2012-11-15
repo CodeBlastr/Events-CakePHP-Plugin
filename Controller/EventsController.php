@@ -20,18 +20,20 @@ class EventsController extends EventsAppController {
  */
 	public function index() {
 		$this->Event->recursive = 0;
-		$this->paginate = array(
-		    'conditions' => array('Event.start > NOW()'),
-		    'order' => array('Event.start' => 'asc')
-		    );
+		$this->paginate['conditions']['Event.start >'] = 'NOW()';
+		$this->paginate['order']['Event.start'] = 'asc';
+//		$this->paginate = array(
+//		    'conditions' => array('Event.start >' =>  'NOW()'),
+//		    'order' => array('Event.start' => 'asc')
+//		    );
 		$this->set('events', $this->paginate());
 	}
-	public function myEvents($userId) {
+	public function my() {
 		$this->Event->recursive = 0;
 		$events = $this->Event->find('all', array(
 		    'conditions' => array(
-			'Event.start > NOW()',
-			'Event.creator_id' => $userId
+				'Event.start > NOW()',
+				'Event.creator_id' => $this->Session->read('Auth.User.id')
 		    ),
 		    'order' => array('Event.start' => 'asc')
 		    ));

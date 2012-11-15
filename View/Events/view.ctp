@@ -1,4 +1,4 @@
-<div class="events view" style="padding:20px;" itemscope itemtype="http://schema.org/Event">
+<div class="events view" itemscope itemtype="http://schema.org/Event">
 <h2 itemprop="name"><?php  echo h($event['Event']['name']);?></h2>
 	
 <div class="eventsView_meta">

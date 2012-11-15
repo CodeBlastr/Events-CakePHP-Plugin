@@ -6,11 +6,18 @@ App::uses('EventsAppController', 'Events.Controller');
  */
 class EventGuestsController extends EventsAppController {
 
+	public $name = 'EventGuests';
+	
+	public $uses = array('Events.EventGuest');
+
 /**
- * Scaffold
+ * index method
  *
- * @var mixed
+ * @return void
  */
-	public $scaffold;
+	public function index() {
+		$this->EventGuest->recursive = 0;
+		$this->set('eventGuests', $this->paginate());
+	}
 
 }
