@@ -21,7 +21,7 @@
 
 
 // Get the Data
-$myEvents = $this->requestAction('/events/events/myEvents/' . $userId);
+$myEvents = $this->requestAction('/events/events/my/' . $userId);
 //debug($myEvents);
 
 

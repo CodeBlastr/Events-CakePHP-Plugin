@@ -25,12 +25,13 @@ class EventsController extends EventsAppController {
 
 		$this->set('events', $this->paginate());
 	}
-	public function my() {
+	public function my($userId = null) {
+		$userId = ($userId) ? $userId : $this->Session->read('Auth.User.id');
 		$this->Event->recursive = 0;
 		$events = $this->Event->find('all', array(
 		    'conditions' => array(
 				'Event.start > NOW()',
-				'Event.creator_id' => $this->Session->read('Auth.User.id')
+				'Event.creator_id' => $userId
 		    ),
 		    'order' => array('Event.start' => 'asc')
 		    ));
