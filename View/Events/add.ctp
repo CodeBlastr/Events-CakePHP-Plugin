@@ -6,7 +6,7 @@
 	echo $this->Form->input('event_schedule_id');
 	echo $this->Form->input('name');
 	echo $this->Form->input('description', array('type' => 'richtext'));
-	echo $this->Form->input('start', array('class' => 'datepicker'));
+	echo $this->Form->input('start');
 	echo $this->Form->input('end');
 	echo $this->Form->input('tickets_total');
 	echo $this->Form->input('tickets_left');
@@ -33,13 +33,3 @@
     </ul>
 </div>
 
-<script type="text/javascript">
-    $(function() {
-	$(".datepicker").datepicker(	{
-	    dateFormat: 'yy-mm-dd',
-	    yearRange: '<?php echo date('Y'); ?>:<?php echo date('Y'+1); ?>',
-	    changeMonth: true,
-	    changeYear: true
-	});
-    });
-</script>
