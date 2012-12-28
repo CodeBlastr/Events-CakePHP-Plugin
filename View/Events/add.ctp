@@ -12,8 +12,9 @@
 	echo $this->Form->input('tickets_left');
 	echo $this->Form->input('ticket_price');
 	echo $this->Form->input('is_public');
-//		echo $this->Form->input('creator_id');
-//		echo $this->Form->input('modifier_id');
+	if(!empty($ownerId)) {
+		echo $this->Form->hidden('owner_id', array('value' => $ownerId));
+	}
 	echo $this->Form->input('Guest');
 	?>
     </fieldset>

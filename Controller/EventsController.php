@@ -31,10 +31,13 @@ class EventsController extends EventsAppController {
 		$events = $this->Event->find('all', array(
 		    'conditions' => array(
 				'Event.start > NOW()',
-				'Event.creator_id' => $userId
+				'OR' => array(
+					'Event.creator_id' => $userId,
+					'Event.owner_id' => $userId,
+				)
 		    ),
 		    'order' => array('Event.start' => 'asc')
-		    ));
+		));
 		// return() the data if it's being used via an element
 		if(isset($this->request->params['requested'])) {
 		  return $events;
@@ -62,7 +65,7 @@ class EventsController extends EventsAppController {
  *
  * @return void
  */
-	public function add() {
+	public function add($ownerId = null) {
 		if ($this->request->is('post')) {
 			$this->Event->create();
 			if ($this->Event->save($this->request->data)) {
@@ -74,7 +77,7 @@ class EventsController extends EventsAppController {
 		}
 		$eventSchedules = $this->Event->EventSchedule->find('list');
 		$guests = $this->Event->Guest->find('list');
-		$this->set(compact('eventSchedules', 'guests'));
+		$this->set(compact('eventSchedules', 'guests', 'ownerId'));
 	}
 
 /**

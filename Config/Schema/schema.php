@@ -74,6 +74,7 @@ class EventsSchema extends CakeSchema {
 		'tickets_left' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'comment' => 'used if event_venue_id is null, # of tickets left'),
 		'ticket_price' => array('type' => 'float', 'null' => true, 'default' => NULL, 'comment' => 'used if EventVenue is empty'),
 		'is_public' => array('type' => 'boolean', 'null' => false, 'default' => NULL, 'comment' => 'overrides calendar settings'),
+		'owner_id' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 36, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'creator_id' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 36, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'modifier_id' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 36, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
