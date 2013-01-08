@@ -75,9 +75,10 @@ class EventsController extends EventsAppController {
 				$this->Session->setFlash(__('The event could not be saved. Please, try again.'));
 			}
 		}
+		$user = $this->Auth->user();
 		$eventSchedules = $this->Event->EventSchedule->find('list');
 		$guests = $this->Event->Guest->find('list');
-		$this->set(compact('eventSchedules', 'guests', 'ownerId'));
+		$this->set(compact('eventSchedules', 'guests', 'ownerId', 'user'));
 	}
 
 /**
