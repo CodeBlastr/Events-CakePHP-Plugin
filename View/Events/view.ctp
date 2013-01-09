@@ -44,7 +44,7 @@
 		</dd>
 	</dl>
 </div>
-
+<?php /* ?>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
@@ -60,6 +60,7 @@
 		<li><?php echo $this->Html->link(__('New Guest'), array('controller' => 'events_guests', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
+<?php */ ?>
 <div class="related">
 	<h3><?php echo __('Related Event Venues');?></h3>
 	<?php if (!empty($event['EventVenue'])):?>
@@ -67,8 +68,6 @@
 	<tr>
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Parent Id'); ?></th>
-		<th><?php echo __('Lft'); ?></th>
-		<th><?php echo __('Rght'); ?></th>
 		<th><?php echo __('Event Id'); ?></th>
 		<th><?php echo __('Name'); ?></th>
 		<th><?php echo __('Description'); ?></th>
@@ -77,8 +76,6 @@
 		<th><?php echo __('Ticket Price'); ?></th>
 		<th><?php echo __('Creator Id'); ?></th>
 		<th><?php echo __('Modifier Id'); ?></th>
-		<th><?php echo __('Created'); ?></th>
-		<th><?php echo __('Modified'); ?></th>
 		<th class="actions"><?php echo __('Actions');?></th>
 	</tr>
 	<?php
@@ -87,8 +84,6 @@
 		<tr>
 			<td><?php echo $eventVenue['id'];?></td>
 			<td><?php echo $eventVenue['parent_id'];?></td>
-			<td><?php echo $eventVenue['lft'];?></td>
-			<td><?php echo $eventVenue['rght'];?></td>
 			<td><?php echo $eventVenue['event_id'];?></td>
 			<td><?php echo $eventVenue['name'];?></td>
 			<td><?php echo $eventVenue['description'];?></td>
@@ -97,8 +92,6 @@
 			<td><?php echo $eventVenue['ticket_price'];?></td>
 			<td><?php echo $eventVenue['creator_id'];?></td>
 			<td><?php echo $eventVenue['modifier_id'];?></td>
-			<td><?php echo $eventVenue['created'];?></td>
-			<td><?php echo $eventVenue['modified'];?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'event_venues', 'action' => 'view', $eventVenue['id'])); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'event_venues', 'action' => 'edit', $eventVenue['id'])); ?>

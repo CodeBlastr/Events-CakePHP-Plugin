@@ -129,7 +129,6 @@ class Event extends EventsAppModel {
 	);
 	
 	public function beforeFind($queryData) {
-		//break;
 		parent::beforeFind($queryData);
 	}
 
