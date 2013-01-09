@@ -12,9 +12,7 @@ App::uses('EventsAppModel', 'Events.Model');
 class Event extends EventsAppModel {
     public $name = 'Event';
 	
-	public $actsAs = array(
-		'Metable'
-		);
+	public $actsAs = array('Metable');
 	
 /**
  * Validation rules
@@ -129,5 +127,10 @@ class Event extends EventsAppModel {
 			'insertQuery' => ''
 		)
 	);
+	
+	public function beforeFind($queryData) {
+		//break;
+		parent::beforeFind($queryData);
+	}
 
 }
