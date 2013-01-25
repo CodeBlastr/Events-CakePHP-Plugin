@@ -132,4 +132,27 @@ class Event extends EventsAppModel {
 		parent::beforeFind($queryData);
 	}
 
+	
+/**
+ * This trims an object, formats it's values if you need to, and returns the data to be merged with the Transaction data.
+ * It is a required function for models that will be for sale via the Transactions Plugin.
+ * 
+ * @param string $foreignKey
+ * @return array The necessary fields to add a Transaction Item
+ */
+	public function mapTransactionItem( $foreignKey ) {
+	    
+	    $itemData = $this->find('first', array('conditions' => array('id' => $foreignKey)));
+	    
+	    $fieldsToCopyDirectly = array('name');
+	    
+	    foreach($itemData['Event'] as $k => $v) {
+			if(in_array($k, $fieldsToCopyDirectly)) {
+				$return['TransactionItem'][$k] = $v;
+			}
+	    }
+	    
+	    return $return;
+	}
+	
 }
