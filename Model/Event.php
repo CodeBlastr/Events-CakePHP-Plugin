@@ -16,11 +16,11 @@ class Event extends EventsAppModel {
 	public $name = 'Event';
 	public $actsAs = array('Metable');
 
-	/**
-	 * Validation rules
-	 *
-	 * @var array
-	 */
+/**
+ * Validation rules
+ *
+ * @var array
+ */
 	public $validate = array(
 		'event_schedule_id' => array(
 			'uuid' => array(
@@ -56,11 +56,11 @@ class Event extends EventsAppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	/**
-	 * belongsTo associations
-	 *
-	 * @var array
-	 */
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
 	public $belongsTo = array(
 		'EventSchedule' => array(
 			'className' => 'Events.EventSchedule',
@@ -71,11 +71,11 @@ class Event extends EventsAppModel {
 		),
 	);
 
-	/**
-	 * hasMany associations
-	 *
-	 * @var array
-	 */
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
 	public $hasMany = array(
 		'EventVenue' => array(
 			'className' => 'Events.EventVenue',
@@ -92,11 +92,11 @@ class Event extends EventsAppModel {
 		)
 	);
 
-	/**
-	 * hasAndBelongsToMany associations
-	 *
-	 * @var array
-	 */
+/**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
 	public $hasAndBelongsToMany = array(
 		'Guest' => array(
 			'className' => 'Events.EventsGuests',
@@ -119,13 +119,13 @@ class Event extends EventsAppModel {
 		parent::beforeFind($queryData);
 	}
 
-	/**
-	 * This trims an object, formats it's values if you need to, and returns the data to be merged with the Transaction data.
-	 * It is a required function for models that will be for sale via the Transactions Plugin.
-	 * 
-	 * @param string $foreignKey
-	 * @return array The necessary fields to add a Transaction Item
-	 */
+/**
+ * This trims an object, formats it's values if you need to, and returns the data to be merged with the Transaction data.
+ * It is a required function for models that will be for sale via the Transactions Plugin.
+ * 
+ * @param string $foreignKey
+ * @return array The necessary fields to add a Transaction Item
+ */
 	public function mapTransactionItem($foreignKey) {
 
 		$itemData = $this->find('first', array('conditions' => array('id' => $foreignKey)));
@@ -141,6 +141,13 @@ class Event extends EventsAppModel {
 		return $return;
 	}
 
+/**
+ * Import
+ * 
+ * @param string $filename
+ * @return type
+ * @todo Make sure fopen can't be hacked, it's the main point of entry for the base64 attack.
+ */
 	function import($filename) {
 		// to avoid having to tweak the contents of 
 		// $data you should use your db field name as the heading name 
