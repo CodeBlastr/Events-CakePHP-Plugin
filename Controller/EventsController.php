@@ -81,13 +81,18 @@ class EventsController extends EventsAppController {
 		$this->set(compact('eventSchedules', 'guests', 'ownerId', 'user'));
 	}
 	public function import($ownerId = null) {
+		
+		$this->set('page_title_for_layout', 'Import Events');
+
+		$ownerId = !empty($ownerId) ? $ownerId : $this->Auth->user('id');
+		
 		if ($this->request->is('post')) {
-			$messages = $this->Event->import($this->request->data['Event']['csv']['tmp_name']);
-			if ($messages) {
-				$this->Session->setFlash($messages);
+			$messages = $this->Event->import($this->request->data);
+			if ( empty($messages['errors']) ) {
+				$this->Session->setFlash(implode($messages['messages']));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The events could not be saved. Please, try again.'));
+				$this->Session->setFlash(implode($messages['errors']));
 			}
 		}
 	}

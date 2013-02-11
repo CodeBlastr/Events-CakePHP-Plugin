@@ -15,6 +15,8 @@ class Event extends EventsAppModel {
 
 	public $name = 'Event';
 	public $actsAs = array('Metable');
+	
+	public $caller = '';
 
 /**
  * Validation rules
@@ -118,6 +120,34 @@ class Event extends EventsAppModel {
 	public function beforeFind($queryData) {
 		parent::beforeFind($queryData);
 	}
+	
+	
+	/**
+	 * @todo Is this variable proposal a good idea?
+	 * 
+	 * @param array $options
+	 */
+	public function beforeSave($options = array()) {
+		
+		switch ($this->caller) {
+			case 'import':
+			$settings['groupOwnerCanImport'] = defined('__EVENTS_GROUP_OWNER_CAN_IMPORT') ? unserialize(__EVENTS_GROUP_OWNER_CAN_IMPORT) : null;
+					if ( $settings['groupOwnerCanImport'] ) {
+						// check to see if this person is allowed to import this
+//						debug($this->data);
+//						die();
+					}
+
+				break;
+
+			default:
+				break;
+		}
+		
+		
+
+		parent::beforeSave($options);
+	}
 
 /**
  * This trims an object, formats it's values if you need to, and returns the data to be merged with the Transaction data.
@@ -144,20 +174,24 @@ class Event extends EventsAppModel {
 /**
  * Import
  * 
- * @param string $filename
+ * Note: To avoid having to tweak the contents of $csvData,
+ * you should use your db field names as the heading names.
+ * eg: Event.id, Event.title, Event.description
+ * 
+ * @param array $data
  * @return type
  * @todo Make sure fopen can't be hacked, it's the main point of entry for the base64 attack.
  */
-	function import($filename) {
-		// to avoid having to tweak the contents of 
-		// $data you should use your db field name as the heading name 
-		// eg: Event.id, Event.title, Event.description
+	function import($data) {
 		
-		// set the filename to read CSV from
-		$filename = TMP . 'uploads' . DS . 'Event' . DS . $filename;
-
+		$this->caller = 'import';
+		
+		if ( $data['Event']['csv']['error'] !== UPLOAD_ERR_OK ) {
+			return array('errors' => 'We did not receive your file. Please try again.');
+		}
+		
 		// open the file
-		$handle = fopen($filename, "r");
+		$handle = fopen($data['Event']['csv']['tmp_name'], "r");
 
 		// read the 1st row as headings
 		$header = fgetcsv($handle);
@@ -169,25 +203,26 @@ class Event extends EventsAppModel {
 		);
 
 		// read each data row in the file
-		while (($row = fgetcsv($handle)) !== FALSE) {
+		while ( ($row = fgetcsv($handle)) !== FALSE ) {
 			$i++;
-			$data = array();
+			$csvData = array();
 
 			// for each header field 
 			foreach ($header as $k => $head) {
 				// get the data field from Model.field
 				if (strpos($head, '.') !== false) {
 					$h = explode('.', $head);
-					$data[$h[0]][$h[1]] = (isset($row[$k])) ? $row[$k] : '';
+					$csvData[$h[0]][$h[1]] = (isset($row[$k])) ? $row[$k] : '';
 				}
 				// get the data field from field
 				else {
-					$data['Event'][$head] = (isset($row[$k])) ? $row[$k] : '';
+					$csvData['Event'][$head] = (isset($row[$k])) ? $row[$k] : '';
+					$csvData['Event']['owner_id'] = $data['Event']['owner_id'];
 				}
 			}
 
 			// see if we have an id             
-			$id = isset($data['Event']['id']) ? $data['Event']['id'] : 0;
+			$id = isset($csvData['Event']['id']) ? $csvData['Event']['id'] : 0;
 
 			// we have an id, so we update
 			if ($id) {
@@ -195,8 +230,8 @@ class Event extends EventsAppModel {
 				// option 1:
 				// load the current row, and merge it with the new data
 				//$this->recursive = -1;
-				//$post = $this->read(null,$id);
-				//$data['Post'] = array_merge($post['Post'],$data['Post']);
+				//$event = $this->read(null,$id);
+				//$csvData['Event'] = array_merge($event['Event'],$csvData['Event']);
 				// option 2:
 				// set the model id
 				$this->id = $id;
@@ -208,21 +243,22 @@ class Event extends EventsAppModel {
 			}
 
 			// see what we have
-			// debug($data);
+			// debug($csvData);
+			
 			// validate the row
-			$this->set($data);
-			if (!$this->validates()) {
-				$this->_flash( 'warning');
+			$this->set($csvData);
+			if ( !$this->validates() ) {
+				//$this->_flash( 'warning');
 				$return['errors'][] = __(sprintf('Event for Row %d failed to validate.', $i), true);
 			}
 
 			// save the row
-			if (!$error && !$this->save($data)) {
+			if ( !$this->save($data) ) {
 				$return['errors'][] = __(sprintf('Event for Row %d failed to save.', $i), true);
 			}
 
 			// success message!
-			if (!$error) {
+			if ( !$error ) {
 				$return['messages'][] = __(sprintf('Event for Row %d was saved.', $i), true);
 			}
 		}
