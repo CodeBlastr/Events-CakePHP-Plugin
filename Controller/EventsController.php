@@ -80,14 +80,19 @@ class EventsController extends EventsAppController {
 		$guests = $this->Event->Guest->find('list');
 		$this->set(compact('eventSchedules', 'guests', 'ownerId', 'user'));
 	}
+	
+/**
+ * Currently allows one to import Events for another
+ * Current AuthUser owns events if an OwnerId is not provided.
+ * 
+ * @param string $ownerId
+ */
 	public function import($ownerId = null) {
 		
 		$this->set('page_title_for_layout', 'Import Events');
-
-		$ownerId = !empty($ownerId) ? $ownerId : $this->Auth->user('id');
 		
 		if ($this->request->is('post')) {
-			$messages = $this->Event->import($this->request->data);
+			$messages = $this->Event->importFromCsv($this->request->data);
 			if ( empty($messages['errors']) ) {
 				$this->Session->setFlash(implode($messages['messages']));
 				$this->redirect(array('action' => 'index'));
@@ -95,6 +100,9 @@ class EventsController extends EventsAppController {
 				$this->Session->setFlash(implode($messages['errors']));
 			}
 		}
+		
+		$this->set('ownerId', !empty($ownerId) ? $ownerId : $this->Auth->user('id'));
+		
 	}
 
 /**

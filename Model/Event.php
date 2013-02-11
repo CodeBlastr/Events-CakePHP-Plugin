@@ -71,6 +71,13 @@ class Event extends EventsAppModel {
 			'fields' => '',
 			'order' => ''
 		),
+		'Owner' => array(
+			'className' => 'Users.user',
+			'foreignKey' => 'owner_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 	);
 
 /**
@@ -131,12 +138,12 @@ class Event extends EventsAppModel {
 		
 		switch ($this->caller) {
 			case 'import':
-			$settings['groupOwnerCanImport'] = defined('__EVENTS_GROUP_OWNER_CAN_IMPORT') ? unserialize(__EVENTS_GROUP_OWNER_CAN_IMPORT) : null;
-					if ( $settings['groupOwnerCanImport'] ) {
-						// check to see if this person is allowed to import this
-//						debug($this->data);
-//						die();
-					}
+				$settings['groupOwnerCanImport'] = defined('__EVENTS_GROUP_OWNER_CAN_IMPORT') ? unserialize(__EVENTS_GROUP_OWNER_CAN_IMPORT) : null;
+				if ( $settings['groupOwnerCanImport'] ) {
+					// check to see if this person is allowed to import this
+//					debug($this->data);
+//					die();
+				}
 
 				break;
 
@@ -182,16 +189,16 @@ class Event extends EventsAppModel {
  * @return type
  * @todo Make sure fopen can't be hacked, it's the main point of entry for the base64 attack.
  */
-	function import($data) {
+	function importFromCsv($data) {
 		
 		$this->caller = 'import';
 		
-		if ( $data['Event']['csv']['error'] !== UPLOAD_ERR_OK ) {
+		if ( $data['Import']['csv']['error'] !== UPLOAD_ERR_OK ) {
 			return array('errors' => 'We did not receive your file. Please try again.');
 		}
 		
 		// open the file
-		$handle = fopen($data['Event']['csv']['tmp_name'], "r");
+		$handle = fopen($data['Import']['csv']['tmp_name'], "r");
 
 		// read the 1st row as headings
 		$header = fgetcsv($handle);
@@ -216,13 +223,13 @@ class Event extends EventsAppModel {
 				}
 				// get the data field from field
 				else {
-					$csvData['Event'][$head] = (isset($row[$k])) ? $row[$k] : '';
-					$csvData['Event']['owner_id'] = $data['Event']['owner_id'];
+					$csvData[$this->alias][$head] = (isset($row[$k])) ? $row[$k] : '';
+					$csvData[$this->alias]['owner_id'] = $data['Import']['owner_id'];
 				}
 			}
 
 			// see if we have an id             
-			$id = isset($csvData['Event']['id']) ? $csvData['Event']['id'] : 0;
+			$id = isset($csvData[$this->alias]['id']) ? $csvData[$this->alias]['id'] : 0;
 
 			// we have an id, so we update
 			if ($id) {
