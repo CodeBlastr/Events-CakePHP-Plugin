@@ -1,3 +1,4 @@
+<?php echo $this->Html->link('Import Multiple Events', '/events/events/import', array('class' => 'btn btn-mini pull-right')); ?>
 <div class="events form">
     <?php echo $this->Form->create('Event'); ?>
     <fieldset>
