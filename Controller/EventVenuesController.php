@@ -32,6 +32,7 @@ class EventVenuesController extends EventsAppController {
 		if (!$this->EventVenue->exists()) {
 			throw new NotFoundException(__('Invalid event venue'));
 		}
+		$this->set('events', $this->EventVenue->Event->find('all', array('conditions' => array('event_venue_id' => $id))));
 		$this->set('eventVenue', $this->EventVenue->read(null, $id));
 	}
 
@@ -78,9 +79,10 @@ class EventVenuesController extends EventsAppController {
 		}
 		$parentEventVenues = $this->EventVenue->ParentEventVenue->find('list');
 		$events = $this->EventVenue->Event->find('list');
-		$creators = $this->EventVenue->Creator->find('list');
-		$modifiers = $this->EventVenue->Modifier->find('list');
-		$this->set(compact('parentEventVenues', 'events', 'creators', 'modifiers'));
+		$eventVenue = $this->EventVenue->read(null, $id);
+		//$creators = $this->EventVenue->creator->find('list');
+		//$modifiers = $this->EventVenue->Modifier->find('list');
+		$this->set(compact('parentEventVenues', 'events', 'creators', 'modifiers', 'eventVenue'));
 	}
 
 /**

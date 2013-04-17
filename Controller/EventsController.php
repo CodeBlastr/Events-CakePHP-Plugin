@@ -58,6 +58,11 @@ class EventsController extends EventsAppController {
 			throw new NotFoundException(__('Invalid event'));
 		}
 		$this->set('event', $this->Event->read(null, $id));
+		$venueid = $this->Event->data['Event']['event_venue_id'];
+		if($venueid !== '') {
+			$this->set('eventVenue', $this->Event->EventVenue->read(null, $venueid));
+		}
+		
 	}
 
 /**
@@ -128,7 +133,10 @@ class EventsController extends EventsAppController {
 		}
 		$eventSchedules = $this->Event->EventSchedule->find('list');
 		$guests = $this->Event->Guest->find('list');
-		$this->set(compact('eventSchedules', 'guests'));
+		$eventVenues = $this->Event->EventVenue->find('list');
+		
+		$event = $this->Event->data;
+		$this->set(compact('eventSchedules', 'guests', 'event', 'eventVenues'));
 	}
 
 /**

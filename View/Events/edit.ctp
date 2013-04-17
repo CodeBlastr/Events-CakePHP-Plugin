@@ -1,17 +1,18 @@
 <div class="events form">
-<?php echo $this->Form->create('Event');?>
+ <?php echo $this->Form->create('Event'); ?>
 	<fieldset>
 		<legend><?php echo __('Edit Event'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('event_schedule_id');
 		echo $this->Form->input('name');
+		
 		echo $this->Form->input('description', array('type' => 'richtext'));
 		echo $this->Form->input('start');
 		echo $this->Form->input('end');
-		echo $this->Form->input('tickets_total');
-		echo $this->Form->input('tickets_left');
-		echo $this->Form->input('ticket_price');
+		//echo $this->Form->input('tickets_total');
+		//echo $this->Form->input('tickets_left');
+		//echo $this->Form->input('ticket_price');
 		echo $this->Form->input('is_public');
 		echo $this->Form->input('creator_id');
 		echo $this->Form->input('modifier_id');
@@ -20,6 +21,8 @@
 	</fieldset>
 <?php echo $this->Form->end(__('Submit'));?>
 </div>
+
+<?php echo $this->Element('thumb_edit', array('model' => 'Event', 'foreignKey' => $event['Event']['id']), array('plugin' => 'Galleries')); ?>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>

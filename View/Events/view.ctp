@@ -149,9 +149,21 @@
 	</table>
 <?php endif; ?>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Guest'), array('controller' => 'events_guests', 'action' => 'add'));?> </li>
-		</ul>
-	</div>
+<?php
+	$this->set('context_menu', array('menus' => array(
+			array(
+				'heading' => 'Events',
+				'items' => array(
+					$this->Html->link(__('List'), array('action' => 'index')),
+					$this->Html->link(__('Edit'), array('action' => 'edit', $event['Event']['id'])),
+					$this->Form->postLink(__('Delete'), array('controller'=> 'events', 'action' => 'delete', $event['Event']['id']), null, __('Are you sure you want to delete event %s?', $event['Event']['id'])),
+				    //$this->Html->link(__('List Event Schedules'), array('controller' => 'event_schedules', 'action' => 'index')),
+					//$this->Html->link(__('New Event Schedule'), array('controller' => 'event_schedules', 'action' => 'add')),
+					//$this->Html->link(__('List Event Venues'), array('controller' => 'event_venues', 'action' => 'index')),
+					//$this->Html->link(__('New Event Venue'), array('controller' => 'event_venues', 'action' => 'add')),
+					//$this->Html->link(__('List Events Guests'), array('controller' => 'events_guests', 'action' => 'index')),
+					//$this->Html->link(__('New Guest'), array('controller' => 'events_guests', 'action' => 'add')),
+			)
+		),
+	))); ?>
 </div>

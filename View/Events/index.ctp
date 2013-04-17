@@ -36,15 +36,18 @@
 	}
 	?>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Event'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Event Schedules'), array('controller' => 'event_schedules', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Event Schedule'), array('controller' => 'event_schedules', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Event Venues'), array('controller' => 'event_venues', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Event Venue'), array('controller' => 'event_venues', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Events Guests'), array('controller' => 'events_guests', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Guest'), array('controller' => 'events_guests', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
+<?php
+$this->set('context_menu', array('menus' => array(
+	array(
+		'heading' => 'Events',
+		'items' => array(
+			$this->Html->link(__('New Event'), array('action' => 'add')),
+		    //$this->Html->link(__('List Event Schedules'), array('controller' => 'event_schedules', 'action' => 'index')),
+			//$this->Html->link(__('New Event Schedule'), array('controller' => 'event_schedules', 'action' => 'add')),
+			$this->Html->link(__('List Event Venues'), array('controller' => 'event_venues', 'action' => 'index')),
+			$this->Html->link(__('New Event Venue'), array('controller' => 'event_venues', 'action' => 'add')),
+			//$this->Html->link(__('List Events Guests'), array('controller' => 'events_guests', 'action' => 'index')),
+			//$this->Html->link(__('New Guest'), array('controller' => 'events_guests', 'action' => 'add')),
+	)
+		),
+	))); ?>

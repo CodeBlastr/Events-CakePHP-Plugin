@@ -1,20 +1,21 @@
 <?php echo $this->Html->link('Import Multiple Events', '/events/events/import', array('class' => 'btn btn-mini pull-right')); ?>
 <div class="events form">
-    <?php echo $this->Form->create('Event'); ?>
+    <?php echo $this->Form->create('Event', array('type' => 'file')); ?>
     <fieldset>
 	<legend><?php echo __('Add Event'); ?></legend>
 	<?php
-	echo $this->Form->input('event_schedule_id');
-	echo $this->Form->input('name');
-	echo $this->Form->input('description', array('type' => 'richtext'));
-	echo $this->Form->input('start');
-	echo $this->Form->input('end');
-	echo $this->Form->input('tickets_total');
-	echo $this->Form->input('tickets_left');
-	echo $this->Form->input('ticket_price');
-	echo $this->Form->input('is_public');
+	echo $this->Form->input('Event.event_schedule_id');
+	echo $this->Form->input('Event.name');
+	echo $this->Form->input('GalleryImage.filename', array('type' => 'file'));
+	echo $this->Form->input('Event.description', array('type' => 'richtext'));
+	echo $this->Form->input('Event.start');
+	echo $this->Form->input('Event.end');
+	echo $this->Form->input('Event.tickets_total');
+	echo $this->Form->input('Event.tickets_left');
+	echo $this->Form->input('Event.ticket_price');
+	echo $this->Form->input('Event.is_public');
 	if(!empty($ownerId)) {
-		echo $this->Form->hidden('owner_id', array('value' => $ownerId));
+		echo $this->Form->hidden('Event.owner_id', array('value' => $ownerId));
 	}
 	echo $this->Form->input('Guest');
 	?>

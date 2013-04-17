@@ -56,6 +56,7 @@ class EventsSchema extends CakeSchema {
 		'tickets_total' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'tickets_left' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'ticket_price' => array('type' => 'float', 'null' => true, 'default' => NULL, 'comment' => 'overrides the event price'),
+		'owner_id' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 36, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'creator_id' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 36, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'modifier_id' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 36, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
@@ -66,6 +67,7 @@ class EventsSchema extends CakeSchema {
 	public $events = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary', 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'event_schedule_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'event_venue_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'collate' => 'latin1_swedish_ci', 'comment' => 'used to attach Event Venues to events', 'charset' => 'latin1'),
 		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 150, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'description' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'start' => array('type' => 'datetime', 'null' => false, 'default' => NULL, 'comment' => 'used if event_schedule_id is null, does not support repeating events'),
