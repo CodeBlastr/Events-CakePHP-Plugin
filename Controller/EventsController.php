@@ -5,7 +5,7 @@ App::uses('EventsAppController', 'Events.Controller');
  *
  * @property Event $Event
  */
-class EventsController extends EventsAppController {
+class _EventsController extends EventsAppController {
 
 	public $name = 'Events';
 	
@@ -160,4 +160,8 @@ class EventsController extends EventsAppController {
 		$this->Session->setFlash(__('Event was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+}
+
+if (!isset($refuseInit)) {
+	class EventsController extends _EventsController {}
 }
