@@ -72,7 +72,7 @@ class Event extends EventsAppModel {
 			'order' => ''
 		),
 		'Owner' => array(
-			'className' => 'Users.user',
+			'className' => 'Users.User',
 			'foreignKey' => 'owner_id',
 			'conditions' => '',
 			'fields' => '',

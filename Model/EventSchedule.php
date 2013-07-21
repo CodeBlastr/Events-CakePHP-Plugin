@@ -20,14 +20,14 @@ class EventSchedule extends EventsAppModel {
  */
 //	public $belongsTo = array(
 //		'Creator' => array(
-//			'className' => 'Users.Creator',
+//			'className' => 'Users.User',
 //			'foreignKey' => 'creator_id',
 //			'conditions' => '',
 //			'fields' => '',
 //			'order' => ''
 //		),
 //		'Modifier' => array(
-//			'className' => 'Users.Modifier',
+//			'className' => 'Users.User',
 //			'foreignKey' => 'modifier_id',
 //			'conditions' => '',
 //			'fields' => '',

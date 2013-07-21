@@ -14,7 +14,7 @@ class _EventsController extends EventsAppController {
 	//public $helpers = array('Time');
 	
 /**
- * index method
+ * Index method
  *
  * @return void
  */
@@ -25,6 +25,12 @@ class _EventsController extends EventsAppController {
 
 		$this->set('events', $this->paginate());
 	}
+	
+/**
+ * My method
+ * 
+ * @param mixed $userId
+ */
 	public function my($userId = null) {
 		$userId = ($userId) ? $userId : $this->Session->read('Auth.User.id');
 		$this->Event->recursive = 0;
