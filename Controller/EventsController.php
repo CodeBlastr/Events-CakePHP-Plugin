@@ -42,6 +42,7 @@ class _EventsController extends EventsAppController {
 					'Event.owner_id' => $userId,
 				)
 		    ),
+			'contain' => array('EventVenue'),
 		    'order' => array('Event.start' => 'asc')
 		));
 		// return() the data if it's being used via an element
