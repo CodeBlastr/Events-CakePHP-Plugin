@@ -64,6 +64,13 @@ class Event extends EventsAppModel {
  * @var array
  */
 	public $belongsTo = array(
+		'EventVenue' => array(
+			'className' => 'Events.EventVenue',
+			'foreignKey' => 'event_venue_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 		'EventSchedule' => array(
 			'className' => 'Events.EventSchedule',
 			'foreignKey' => 'event_schedule_id',
@@ -80,26 +87,6 @@ class Event extends EventsAppModel {
 		),
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'EventVenue' => array(
-			'className' => 'Events.EventVenue',
-			'foreignKey' => 'event_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
 
 /**
  * hasAndBelongsToMany associations

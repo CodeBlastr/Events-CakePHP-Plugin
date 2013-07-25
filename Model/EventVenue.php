@@ -76,13 +76,13 @@ class EventVenue extends EventsAppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'Event' => array(
-			'className' => 'Event',
-			'foreignKey' => 'event_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
+//		'Event' => array(
+//			'className' => 'Event',
+//			'foreignKey' => 'event_id',
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => ''
+//		),
 //		'Creator' => array(
 //			'className' => 'Creator',
 //			'foreignKey' => 'creator_id',
@@ -105,6 +105,19 @@ class EventVenue extends EventsAppModel {
  * @var array
  */
 	public $hasMany = array(
+		'Event' => array(
+			'className' => 'Event',
+			'foreignKey' => 'event_venue_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
 		'EventGuest' => array(
 			'className' => 'EventGuest',
 			'foreignKey' => 'event_venue_id',
