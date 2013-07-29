@@ -14,6 +14,7 @@ App::uses('EventsAppModel', 'Events.Model');
 class Event extends EventsAppModel {
 
 	public $name = 'Event';
+	
 	public $actsAs = array('Metable', 'Galleries.Mediable');
 	
 	public $caller = '';
