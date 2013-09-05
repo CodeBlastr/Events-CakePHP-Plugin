@@ -96,7 +96,7 @@ class _Event extends EventsAppModel {
  */
 	public $hasAndBelongsToMany = array(
 		'Guest' => array(
-			'className' => 'Events.EventsGuests',
+			'className' => 'Users.User',
 			'joinTable' => 'events_guests',
 			'foreignKey' => 'event_id',
 			'associationForeignKey' => 'user_id',
