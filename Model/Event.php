@@ -88,6 +88,12 @@ class _Event extends EventsAppModel {
 		),
 	);
 
+	public $hasMany = array(
+		'EventsGuest' => array(
+			'className' => 'Events.EventsGuest',
+			'foreignKey' => 'event_id',
+			),
+	);
 
 /**
  * hasAndBelongsToMany associations
