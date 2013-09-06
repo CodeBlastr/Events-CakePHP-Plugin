@@ -10,8 +10,10 @@ App::uses('EventsAppModel', 'Events.Model');
  * @property Creator $Creator
  * @property Modifier $Modifier
  */
-class EventsGuest extends EventsAppModel {
+class _EventsGuest extends EventsAppModel {
+
     public $name = 'EventsGuest';
+
 /**
  * Validation rules
  *
@@ -90,7 +92,7 @@ class EventsGuest extends EventsAppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
 
 /**
  * belongsTo associations
@@ -125,20 +127,10 @@ class EventsGuest extends EventsAppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		),
-//		'Creator' => array(
-//			'className' => 'Users.Creator',
-//			'foreignKey' => 'creator_id',
-//			'conditions' => '',
-//			'fields' => '',
-//			'order' => ''
-//		),
-//		'Modifier' => array(
-//			'className' => 'Users.Modifier',
-//			'foreignKey' => 'modifier_id',
-//			'conditions' => '',
-//			'fields' => '',
-//			'order' => ''
-//		)
+		)
 	);
+}
+
+if (!isset($refuseInit)) {
+    class EventsGuest extends _EventsGuest {}
 }
