@@ -81,9 +81,8 @@ class EventsGuestsController extends EventsAppController {
 		$users = $this->EventsGuest->User->find('list');
 		$eventVenues = $this->EventsGuest->EventVenue->find('list');
 		$eventSeats = $this->EventsGuest->EventSeat->find('list');
-		$creators = $this->EventsGuest->Creator->find('list');
-		$modifiers = $this->EventsGuest->Modifier->find('list');
-		$this->set(compact('events', 'users', 'eventVenues', 'eventSeats', 'creators', 'modifiers'));
+
+		$this->set(compact('events', 'users', 'eventVenues', 'eventSeats'));
 	}
 
 /**

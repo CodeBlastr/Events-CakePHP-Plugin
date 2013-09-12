@@ -9,8 +9,8 @@
 		echo $this->Form->input('email');
 		echo $this->Form->input('event_venue_id');
 		echo $this->Form->input('event_seat_id');
-		echo $this->Form->input('creator_id');
-		echo $this->Form->input('modifier_id');
+		#echo $this->Form->input('creator_id');
+		#echo $this->Form->input('modifier_id');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit'));?>
