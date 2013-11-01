@@ -5,7 +5,7 @@ App::uses('EventsAppController', 'Events.Controller');
  *
  * @property Event $Event
  */
-class _EventsController extends EventsAppController {
+class AppEventsController extends EventsAppController {
 
 	public $name = 'Events';
 	
@@ -170,5 +170,5 @@ class _EventsController extends EventsAppController {
 }
 
 if (!isset($refuseInit)) {
-	class EventsController extends _EventsController {}
+	class EventsController extends AppEventsController {}
 }

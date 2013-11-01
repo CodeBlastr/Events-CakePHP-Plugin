@@ -10,7 +10,7 @@ App::uses('EventsAppModel', 'Events.Model');
  * @property Creator $Creator
  * @property Modifier $Modifier
  */
-class _EventsGuest extends EventsAppModel {
+class AppEventsGuest extends EventsAppModel {
 
     public $name = 'EventsGuest';
 
@@ -132,5 +132,5 @@ class _EventsGuest extends EventsAppModel {
 }
 
 if (!isset($refuseInit)) {
-    class EventsGuest extends _EventsGuest {}
+    class EventsGuest extends AppEventsGuest {}
 }
