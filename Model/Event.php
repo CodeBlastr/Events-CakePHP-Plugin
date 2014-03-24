@@ -117,10 +117,20 @@ class AppEvent extends EventsAppModel {
 			'insertQuery' => ''
 		)
 	);
-
-	public function beforeFind($queryData) {
-		parent::beforeFind($queryData);
+	
+/**
+ * Constructor
+ */
+	public function __construct($id = false, $table = null, $ds = null) {
+		if (CakePlugin::loaded('Media')) {
+			$this->actsAs[] = 'Media.MediaAttachable';
+		}
+		parent::__construct($id, $table, $ds);
 	}
+
+	// public function beforeFind($queryData) {
+		// parent::beforeFind($queryData);
+	// }
 	
 	
 	/**
@@ -129,24 +139,13 @@ class AppEvent extends EventsAppModel {
 	 * @param array $options
 	 */
 	public function beforeSave($options = array()) {
-		
 		switch ($this->caller) {
 			case 'import':
 				$settings['groupOwnerCanImport'] = defined('__EVENTS_GROUP_OWNER_CAN_IMPORT') ? unserialize(__EVENTS_GROUP_OWNER_CAN_IMPORT) : null;
-				if ( $settings['groupOwnerCanImport'] ) {
-					// check to see if this person is allowed to import this
-//					debug($this->data);
-//					die();
-				}
-
 				break;
-
 			default:
 				break;
 		}
-		
-		
-
 		parent::beforeSave($options);
 	}
 
@@ -158,17 +157,13 @@ class AppEvent extends EventsAppModel {
  * @return array The necessary fields to add a Transaction Item
  */
 	public function mapTransactionItem($foreignKey) {
-
 		$itemData = $this->find('first', array('conditions' => array('id' => $foreignKey)));
-
 		$fieldsToCopyDirectly = array('name');
-
 		foreach ($itemData['Event'] as $k => $v) {
 			if (in_array($k, $fieldsToCopyDirectly)) {
 				$return['TransactionItem'][$k] = $v;
 			}
 		}
-
 		return $return;
 	}
 
@@ -184,19 +179,14 @@ class AppEvent extends EventsAppModel {
  * @todo Make sure fopen can't be hacked, it's the main point of entry for the base64 attack.
  */
 	function importFromCsv($data) {
-		
 		$this->caller = 'import';
-		
 		if ( $data['Import']['csv']['error'] !== UPLOAD_ERR_OK ) {
 			return array('errors' => 'We did not receive your file. Please try again.');
 		}
-		
 		// open the file
 		$handle = fopen($data['Import']['csv']['tmp_name'], "r");
-
 		// read the 1st row as headings
 		$header = fgetcsv($handle);
-
 		// create a message container
 		$return = array(
 			'messages' => array(),
@@ -207,7 +197,6 @@ class AppEvent extends EventsAppModel {
 		while ( ($row = fgetcsv($handle)) !== FALSE ) {
 			$i++;
 			$csvData = array();
-
 			// for each header field 
 			foreach ($header as $k => $head) {
 				// get the data field from Model.field
@@ -221,10 +210,8 @@ class AppEvent extends EventsAppModel {
 					$csvData[$this->alias]['owner_id'] = $data['Import']['owner_id'];
 				}
 			}
-
 			// see if we have an id             
 			$id = isset($csvData[$this->alias]['id']) ? $csvData[$this->alias]['id'] : 0;
-
 			// we have an id, so we update
 			if ($id) {
 				// there is 2 options here, 
@@ -236,13 +223,10 @@ class AppEvent extends EventsAppModel {
 				// option 2:
 				// set the model id
 				$this->id = $id;
-			}
-
-			// or create a new record
-			else {
+			} else {
+				// or create a new record
 				$this->create();
 			}
-
 			// see what we have
 			// debug($csvData);
 			
@@ -270,8 +254,6 @@ class AppEvent extends EventsAppModel {
 		// return the messages
 		return $return;
 	}
-
-
 }
 
 if (!isset($refuseInit)) {

@@ -7,6 +7,5 @@
 			?>
 		</h4>
 	    <?php echo $this->Text->truncate(strip_tags($event['Event']['description'])); ?>
-	    <br />
-	    <i class="icon-tag"></i> $ <?php echo h($event['Event']['ticket_price']); ?>&nbsp; <i class="icon-time"></i> <?php echo date('g:i a', strtotime($event['Event']['start'])) ?>
+	    <i class="icon-tag"></i> <?php echo ZuhaInflector::pricify($event['Event']['ticket_price'], array('currency' => 'USD')); ?> &nbsp; <i class="icon-time"></i> <?php echo ZuhaInflector::timify($event['Event']['start']); ?>
 	</div>
