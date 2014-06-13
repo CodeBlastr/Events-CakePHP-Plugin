@@ -16,7 +16,7 @@ class EventsGuestsController extends EventsAppController {
 		$this->EventsGuest->recursive = 0;
 		$this->paginate['contain'][] = 'Event';
 		$this->paginate['contain'][] = 'User';
-		$this->paginate['order'] = 'Event.created desc';
+		$this->paginate['order'] = 'EventsGuest.created desc';
 		$this->set('eventsGuests', $this->paginate());
 	}
 
