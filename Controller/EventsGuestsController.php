@@ -1,8 +1,8 @@
 <?php
+
 App::uses('EventsAppController', 'Events.Controller');
+
 /**
- * EventsGuests Controller
- *
  * @property EventsGuest $EventsGuest
  */
 class EventsGuestsController extends EventsAppController {
@@ -10,20 +10,17 @@ class EventsGuestsController extends EventsAppController {
 	public $uses = array('Events.EventsGuest');
 
 /**
- * index method
- *
  * @return void
  */
 	public function index() {
 		$this->EventsGuest->recursive = 0;
 		$this->paginate['contain'][] = 'Event';
 		$this->paginate['contain'][] = 'User';
+		$this->paginate['order'] = 'Event.created desc';
 		$this->set('eventsGuests', $this->paginate());
 	}
 
 /**
- * view method
- *
  * @param string $id
  * @return void
  */
@@ -36,8 +33,6 @@ class EventsGuestsController extends EventsAppController {
 	}
 
 /**
- * add method
- *
  * @return void
  */
 	public function add() {
@@ -59,8 +54,6 @@ class EventsGuestsController extends EventsAppController {
 	}
 
 /**
- * edit method
- *
  * @param string $id
  * @return void
  */
@@ -88,8 +81,6 @@ class EventsGuestsController extends EventsAppController {
 	}
 
 /**
- * delete method
- *
  * @param string $id
  * @return void
  */
@@ -108,4 +99,5 @@ class EventsGuestsController extends EventsAppController {
 		$this->Session->setFlash(__('Events guest was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+
 }
