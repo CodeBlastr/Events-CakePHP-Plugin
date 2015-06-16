@@ -64,10 +64,10 @@ class AppEventsController extends EventsAppController {
 		if (!$this->Event->exists()) {
 			throw new NotFoundException(__('Invalid event'));
 		}
-		$event = $this->set('event', $this->Event->read(null, $id));
-		$venueid = $this->Event->data['Event']['event_venue_id'];
+		$this->set('event', $event = $this->Event->find('first', array('conditions' => array('Event.id' => $id))));
+		$venueId = $event['Event']['event_venue_id'];
 		if ($venueid !== '') {
-			$this->set('eventVenue', $this->Event->EventVenue->read(null, $venueid));
+			$this->set('eventVenue', $this->Event->EventVenue->read(null, $venueId));
 		}
 		$this->set('title_for_layout', $this->Event->data['Event']['name'] . ' < Events | ' . __SYSTEM_SITE_NAME);
 	}
