@@ -100,9 +100,7 @@ class AppEventsController extends EventsAppController {
  * @param string $ownerId
  */
 	public function import($ownerId = null) {
-		
 		$this->set('page_title_for_layout', 'Import Events');
-		
 		if ($this->request->is('post')) {
 			$messages = $this->Event->importFromCsv($this->request->data);
 			if ( empty($messages['errors']) ) {
