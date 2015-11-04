@@ -70,7 +70,7 @@ class EventVenue extends EventsAppModel {
  */
 	public $belongsTo = array(
 		'ParentEventVenue' => array(
-			'className' => 'EventVenue',
+			'className' => 'Events.EventVenue',
 			'foreignKey' => 'parent_id',
 			'conditions' => '',
 			'fields' => '',
@@ -106,7 +106,7 @@ class EventVenue extends EventsAppModel {
  */
 	public $hasMany = array(
 		'Event' => array(
-			'className' => 'Event',
+			'className' => 'Events.Event',
 			'foreignKey' => 'event_venue_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -119,7 +119,7 @@ class EventVenue extends EventsAppModel {
 			'counterQuery' => ''
 		),
 		'EventGuest' => array(
-			'className' => 'EventGuest',
+			'className' => 'Events.EventGuest',
 			'foreignKey' => 'event_venue_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -132,7 +132,7 @@ class EventVenue extends EventsAppModel {
 			'counterQuery' => ''
 		),
 		'EventSeat' => array(
-			'className' => 'EventSeat',
+			'className' => 'Events.EventSeat',
 			'foreignKey' => 'event_venue_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -145,7 +145,7 @@ class EventVenue extends EventsAppModel {
 			'counterQuery' => ''
 		),
 		'ChildEventVenue' => array(
-			'className' => 'EventVenue',
+			'className' => 'Events.EventVenue',
 			'foreignKey' => 'parent_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -158,5 +158,15 @@ class EventVenue extends EventsAppModel {
 			'counterQuery' => ''
 		)
 	);
+	
+/**
+ * Constructor
+ */
+	public function __construct($id = false, $table = null, $ds = null) {
+		if (CakePlugin::loaded('FileStorage')) {
+			$this->actsAs[] = 'FileStorage.FileAttach';
+		}
+		parent::__construct($id, $table, $ds);
+	}
 
 }

@@ -28,36 +28,19 @@ class AppEvent extends EventsAppModel {
 		'event_schedule_id' => array(
 			'uuid' => array(
 				'rule' => array('uuid'),
-			//'message' => 'Your custom message here',
-			//'allowEmpty' => false,
-			//'required' => false,
-			//'last' => false, // Stop validation after this rule
-			//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'name' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-			//'message' => 'Your custom message here',
-			//'allowEmpty' => false,
-			//'required' => false,
-			//'last' => false, // Stop validation after this rule
-			//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'is_public' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
-			//'message' => 'Your custom message here',
-			//'allowEmpty' => false,
-			//'required' => false,
-			//'last' => false, // Stop validation after this rule
-			//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 	);
-
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
  * belongsTo associations
@@ -124,6 +107,12 @@ class AppEvent extends EventsAppModel {
 	public function __construct($id = false, $table = null, $ds = null) {
 		if (CakePlugin::loaded('Media')) {
 			$this->actsAs[] = 'Media.MediaAttachable';
+		}
+		if (CakePlugin::loaded('FileStorage')) {
+			$this->actsAs[] = 'FileStorage.FileAttach';
+		}
+		if (CakePlugin::loaded('Ratings')) {
+			$this->actsAs[] = 'Ratings.Ratable';
 		}
 		parent::__construct($id, $table, $ds);
 	}

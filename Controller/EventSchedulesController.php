@@ -7,6 +7,9 @@ App::uses('EventsAppController', 'Events.Controller');
  */
 class EventSchedulesController extends EventsAppController {
 
+	public $name = 'EventSchedules';
+
+	public $uses = 'Events.EventSchedule';
 
 /**
  * index method
@@ -47,10 +50,6 @@ class EventSchedulesController extends EventsAppController {
 				$this->Session->setFlash(__('The event schedule could not be saved. Please, try again.'));
 			}
 		}
-		$types = $this->EventSchedule->Type->find('list');
-		$creators = $this->EventSchedule->Creator->find('list');
-		$modifiers = $this->EventSchedule->Modifier->find('list');
-		$this->set(compact('types', 'creators', 'modifiers'));
 	}
 
 /**

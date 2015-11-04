@@ -1,5 +1,6 @@
 <?php
 App::uses('EventsAppController', 'Events.Controller');
+
 /**
  * EventSeats Controller
  *
@@ -7,6 +8,9 @@ App::uses('EventsAppController', 'Events.Controller');
  */
 class EventSeatsController extends EventsAppController {
 
+	public $name = 'EventSeats';
+
+	public $uses = 'Events.EventSeat';
 
 /**
  * index method
@@ -15,7 +19,7 @@ class EventSeatsController extends EventsAppController {
  */
 	public function index() {
 		$this->EventSeat->recursive = 0;
-		$this->set('eventSeats', $this->paginate());
+		$this->set('eventSeats', $eventSeats = $this->paginate()); // shows webpages for some reason
 	}
 
 /**
@@ -29,7 +33,7 @@ class EventSeatsController extends EventsAppController {
 		if (!$this->EventSeat->exists()) {
 			throw new NotFoundException(__('Invalid event seat'));
 		}
-		$this->set('eventSeat', $this->EventSeat->read(null, $id));
+		$this->set('eventSeat', $this->EventSeat->find('first', array('contain' => array('EventVenue'), 'conditions' => array('EventSeat.id' => $id))));
 	}
 
 /**
@@ -47,10 +51,8 @@ class EventSeatsController extends EventsAppController {
 				$this->Session->setFlash(__('The event seat could not be saved. Please, try again.'));
 			}
 		}
-		$eventVenues = $this->EventSeat->EventVenue->find('list');
-		$creators = $this->EventSeat->Creator->find('list');
-		$modifiers = $this->EventSeat->Modifier->find('list');
-		$this->set(compact('eventVenues', 'creators', 'modifiers'));
+		$this->set('eventVenues', $eventVenues = $this->EventSeat->EventVenue->find('list'));
+		$this->set('enumerations', $enumerations = $this->EventSeat->Enumeration->find('list', array('conditions' => array('Enumeration.type' => 'EVENTSEAT'))));
 	}
 
 /**
@@ -74,10 +76,8 @@ class EventSeatsController extends EventsAppController {
 		} else {
 			$this->request->data = $this->EventSeat->read(null, $id);
 		}
-		$eventVenues = $this->EventSeat->EventVenue->find('list');
-		$creators = $this->EventSeat->Creator->find('list');
-		$modifiers = $this->EventSeat->Modifier->find('list');
-		$this->set(compact('eventVenues', 'creators', 'modifiers'));
+		$this->set('eventVenues', $eventVenues = $this->EventSeat->EventVenue->find('list'));
+		$this->set('enumerations', $enumerations = $this->EventSeat->Enumeration->find('list', array('conditions' => array('Enumeration.type' => 'EVENTSEAT'))));
 	}
 
 /**
@@ -87,12 +87,13 @@ class EventSeatsController extends EventsAppController {
  * @return void
  */
 	public function delete($id = null) {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException();
-		}
+		// if (!$this->request->is('post')) {
+			// throw new MethodNotAllowedException();
+		// }
 		$this->EventSeat->id = $id;
 		if (!$this->EventSeat->exists()) {
-			throw new NotFoundException(__('Invalid event seat'));
+			$this->Session->setFlash(__('Invalid event seat'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->EventSeat->delete()) {
 			$this->Session->setFlash(__('Event seat deleted'));

@@ -1,17 +1,25 @@
 <div class="events index">
 	<h2><?php echo __('Events');?></h2>
-	<?php foreach ($events as $event) : ?>
-		<div class="row">
-			<div class="col-sm-8">
-				<h4><?php echo $this->Html->link($event['Event']['name'], array('action' => 'view', $event['Event']['id'])); ?></h4>
-				<?php echo $this->Text->truncate($event['Event']['description']); ?>
-			</div>
-			<div class="col-sm-4 text-right">
-				<?php echo $this->Html->link('View', array('action' => 'view', $event['Event']['id']), array('class' => 'btn btn-xs btn-default')); ?></h3>
-			</div>
+	<div class="row">
+		<div class="col-md-12">
+			<?php
+			// format calendar data and combine into one array
+			foreach ($events as $event) :
+				$items[] = array(
+					'id' => $event['Event']['id'],
+					'title' => __('%s', $event['Event']['name']),
+					'allDay' => false,
+					'start' => date('c', strtotime($event['Event']['start'])),
+					'end' => date('c', strtotime($event['Event']['end'])),
+					'url' => '/events/events/view/' . $event['Event']['id'],
+					'className' => 'event',
+					'color' => '#0d729a'
+				);
+			endforeach;
+			echo $this->Calendar->renderCalendar(array('data' => json_encode($items))); ?>
 		</div>
-		<hr>
-	<?php endforeach; ?>
+	</div>
+	<hr>
 	<?php echo $this->element('paging'); ?>
 </div>
 
@@ -30,8 +38,8 @@ $this->set('context_menu', array('menus' => array(
 			$this->Html->link(__('New Event'), array('action' => 'add')),
 		    //$this->Html->link(__('List Event Schedules'), array('controller' => 'event_schedules', 'action' => 'index')),
 			//$this->Html->link(__('New Event Schedule'), array('controller' => 'event_schedules', 'action' => 'add')),
-			$this->Html->link(__('List Venues'), array('controller' => 'event_venues', 'action' => 'index')),
-			$this->Html->link(__('New Venue'), array('controller' => 'event_venues', 'action' => 'add')),
+			$this->Html->link(__('List Event Venues'), array('controller' => 'event_venues', 'action' => 'index')),
+			$this->Html->link(__('New Event Venue'), array('controller' => 'event_venues', 'action' => 'add')),
 			//$this->Html->link(__('List Events Guests'), array('controller' => 'events_guests', 'action' => 'index')),
 			//$this->Html->link(__('New Guest'), array('controller' => 'events_guests', 'action' => 'add')),
 			)

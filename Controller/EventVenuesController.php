@@ -7,7 +7,7 @@ App::uses('EventsAppController', 'Events.Controller');
  */
 class EventVenuesController extends EventsAppController {
 
-    	public $name = 'EventVenues';
+    public $name = 'EventVenues';
 	
 	public $uses = array('Events.EventVenue');
 
@@ -18,7 +18,7 @@ class EventVenuesController extends EventsAppController {
  */
 	public function index() {
 		$this->EventVenue->recursive = 0;
-		$this->set('eventVenues', $this->paginate());
+		$this->set('eventVenues', $eventVenues = $this->paginate());
 	}
 
 /**
@@ -30,10 +30,10 @@ class EventVenuesController extends EventsAppController {
 	public function view($id = null) {
 		$this->EventVenue->id = $id;
 		if (!$this->EventVenue->exists()) {
-			throw new NotFoundException(__('Invalid event venue'));
+			throw new NotFoundException(__('Invalid venue'));
 		}
-		$this->set('events', $this->EventVenue->Event->find('all', array('conditions' => array('event_venue_id' => $id))));
-		$this->set('eventVenue', $this->EventVenue->read(null, $id));
+		$this->set('events', $this->EventVenue->Event->find('all', array('conditions' => array('Event.event_venue_id' => $id))));
+		$this->set('eventVenue', $eventVenue = $this->EventVenue->find('first', array('contain' => array('Event', 'EventSeat'), 'conditions' => array('EventVenue.id' => $id))));
 	}
 
 /**
@@ -45,10 +45,10 @@ class EventVenuesController extends EventsAppController {
 		if ($this->request->is('post')) {
 			$this->EventVenue->create();
 			if ($this->EventVenue->save($this->request->data)) {
-				$this->Session->setFlash(__('The event venue has been saved'));
+				$this->Session->setFlash(__('The venue has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The event venue could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The venue could not be saved. Please, try again.'));
 			}
 		}
 		$parentEventVenues = $this->EventVenue->ParentEventVenue->find('list');
@@ -74,15 +74,12 @@ class EventVenuesController extends EventsAppController {
 			} else {
 				$this->Session->setFlash(__('The event venue could not be saved. Please, try again.'));
 			}
-		} else {
-			$this->request->data = $this->EventVenue->read(null, $id);
 		}
-		$parentEventVenues = $this->EventVenue->ParentEventVenue->find('list');
-		$events = $this->EventVenue->Event->find('list');
-		$eventVenue = $this->EventVenue->read(null, $id);
-		//$creators = $this->EventVenue->creator->find('list');
-		//$modifiers = $this->EventVenue->Modifier->find('list');
-		$this->set(compact('parentEventVenues', 'events', 'creators', 'modifiers', 'eventVenue'));
+		// $parentEventVenues = $this->EventVenue->ParentEventVenue->find('list'); // just didn't seem necessary (should be used for custom implementations?)
+		// $events = $this->EventVenue->Event->find('list'); // just didn't seem necessary (should be used for custom implementations?)
+		$this->set('eventVenue', $this->request->data = $eventVenue = $this->EventVenue->find('first', array('conditions' => array('EventVenue.id' => $id))));
+		$this->set('page_title_for_layout', __('Edit %s', $this->request->data['EventVenue']['name'])); 
+		$this->set('title_for_layout', __('Edit %s', $this->request->data['EventVenue']['name']));
 	}
 
 /**

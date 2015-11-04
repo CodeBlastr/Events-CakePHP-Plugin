@@ -1,5 +1,6 @@
 <?php
 App::uses('EventsAppModel', 'Events.Model');
+
 /**
  * EventSeat Model
  *
@@ -8,7 +9,9 @@ App::uses('EventsAppModel', 'Events.Model');
  * @property Modifier $Modifier
  * @property EventGuest $EventGuest
  */
-class EventSeat extends EventsAppModel {
+ 
+class AppEventSeat extends EventsAppModel {
+	
     public $name = 'EventSeat';
 /**
  * Validation rules
@@ -46,22 +49,29 @@ class EventSeat extends EventsAppModel {
  * @var array
  */
 	public $belongsTo = array(
+		'Enumeration' => array(
+			'className' => 'Enumeration',
+			'foreignKey' => 'enumeration_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 		'EventVenue' => array(
-			'className' => 'EventVenue',
+			'className' => 'Events.EventVenue',
 			'foreignKey' => 'event_venue_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
 		'Creator' => array(
-			'className' => 'Creator',
+			'className' => 'Users.User',
 			'foreignKey' => 'creator_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
 		'Modifier' => array(
-			'className' => 'Modifier',
+			'className' => 'Users.User',
 			'foreignKey' => 'modifier_id',
 			'conditions' => '',
 			'fields' => '',
@@ -76,7 +86,7 @@ class EventSeat extends EventsAppModel {
  */
 	public $hasMany = array(
 		'EventGuest' => array(
-			'className' => 'EventGuest',
+			'className' => 'Events.EventGuest',
 			'foreignKey' => 'event_seat_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -90,4 +100,12 @@ class EventSeat extends EventsAppModel {
 		)
 	);
 
+	// public function __construct($id = false, $table = null, $ds = null) {
+		// parent::__construct($id, $table, $ds);
+	// }
+
+}
+
+if (!isset($refuseInit)) {
+	class EventSeat extends AppEventSeat {}
 }
