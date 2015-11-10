@@ -104,6 +104,30 @@ class AppEventSeat extends EventsAppModel {
 		// parent::__construct($id, $table, $ds);
 	// }
 
+/**
+ * Before save callback
+ * 
+ */
+	public function beforeSave($options = array()) {		
+		if(isset($this->data[$this->alias]['data']) && !empty($this->data[$this->alias]['data'])) {
+			$this->data[$this->alias]['data'] = json_encode($this->data[$this->alias]['data']);
+		}
+		return parent::beforeSave($options);
+	}
+
+/**
+ * After Find Callback
+ *
+ */
+	public function afterFind($results, $primary = false) {
+		for($i = 0 ; $i < count($results) ; $i++) {
+			if(isset($results[$i][$this->alias]['data']) && !empty($results[$i][$this->alias]['data'])) {
+				$results[$i][$this->alias]['data'] = json_decode($results[$i][$this->alias]['data'], true);
+			}
+		}
+	    return $results;
+	}
+
 }
 
 if (!isset($refuseInit)) {
